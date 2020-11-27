@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import Card from "../components/Card";
 import FourByFourGrid from "../components/FourByFourGrid";
+import GameScreen from "../components/GameScreen";
 import Input from "../components/Input";
 import Colors from "../constants/colors";
 
@@ -18,6 +19,7 @@ const StartGameScreen = (props) => {
 	const [enteredValue, setEnteredValue] = useState("");
 	const [confirmed, setConfirmed] = useState(false);
 	const [selectedNumber, setSelectedNumber] = useState("");
+	const [robotNumber, setRobotNumber] = useState("");
 
 	const numInputHandler = (inputText) => {
 		setEnteredValue(inputText.replace(/[^\d]/g, ""));
@@ -27,9 +29,20 @@ const StartGameScreen = (props) => {
 		setEnteredValue("");
 	};
 
+	const generateRandomNumber = (min, max, exclude) => {
+		min = Math.ceil(min);
+		max = Math.floor(max);
+		const randomNum = Math.floor(Math.random() * (max - min) + min);
+		if (randomNum === exclude) {
+			return generateRandomNumber(min, max, exclude);
+		} else {
+			return randomNum;
+		}
+	};
+
 	const confirmHandler = () => {
 		const gameNumber = parseInt(enteredValue);
-		if (isNaN(gameNumber) || gameNumber <= 0 || gameNumber >= 99) {
+		if (isNaN(gameNumber) || gameNumber <= 0 || gameNumber > 99) {
 			Alert.alert(
 				"Aw man, I don't know that number!",
 				"Try picking one that falls in the 1-99 range--I know ALL of those!",
@@ -39,7 +52,9 @@ const StartGameScreen = (props) => {
 
 		setConfirmed(true);
 		setSelectedNumber(gameNumber);
+		setRobotNumber(generateRandomNumber(1, 100, gameNumber));
 		setEnteredValue("");
+		Keyboard.dismiss();
 	};
 
 	let gameOutput;
@@ -84,19 +99,7 @@ const StartGameScreen = (props) => {
 						</View>
 					</View>
 				</Card>
-				<FourByFourGrid
-					box1="You"
-					box2={selectedNumber}
-					box3={selectedNumber}
-					box4="Robo Nemesis"
-					style={styles.gameContainer}
-					row1Color={Colors.positiveColor}
-					row2Color={Colors.negativeColor}
-					box2Color={Colors.darkOverlay}
-					box3Color={Colors.darkOverlay}
-					row1TextColor={Colors.secondaryColor}
-					row2TextColor={Colors.secondaryColor}
-				/>
+				<GameScreen userNumber={selectedNumber} robotNumber={robotNumber} />
 			</View>
 		</TouchableWithoutFeedback>
 	);

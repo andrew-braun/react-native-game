@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import Card from "../components/Card";
-import Colors from "../constants/colors";
 
 const FourByFourGrid = (props) => {
 	const {
@@ -92,14 +91,11 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 1,
 		borderColor: "white",
 	},
-	row2: {},
 	box: {
 		width: "50%",
 		justifyContent: "center",
 		alignItems: "center",
 	},
-	box2: {},
-	box4: {},
 	boxContent: {
 		textAlign: "center",
 		fontSize: 30,
