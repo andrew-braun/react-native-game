@@ -90,6 +90,12 @@ const StartGameScreen = (props) => {
 					box3={selectedNumber}
 					box4="Robo Nemesis"
 					style={styles.gameContainer}
+					row1Color={Colors.positiveColor}
+					row2Color={Colors.negativeColor}
+					box2Color={Colors.darkOverlay}
+					box3Color={Colors.darkOverlay}
+					row1TextColor={Colors.secondaryColor}
+					row2TextColor={Colors.secondaryColor}
 				/>
 			</View>
 		</TouchableWithoutFeedback>
